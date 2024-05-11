@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+import app from '../app/index.js';
+const { PORT = 8000 } = process.env;
+
+app.listen(PORT, () => {
+	console.log('Listening on port', PORT);
+});
