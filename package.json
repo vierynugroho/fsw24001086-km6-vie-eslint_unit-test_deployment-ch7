@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"type": "commonjs",
 	"scripts": {
-		"test": "jest",
+		"test": "jest --collectCoverage",
 		"eslint": "eslint -r dotenv/config bin/www",
 		"start": "node -r dotenv/config bin/www",
 		"develop": "nodemon -r dotenv/config bin/www",

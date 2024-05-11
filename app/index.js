@@ -7,6 +7,8 @@ const swaggerDocument = require('../docs/swagger.json');
 const { MORGAN_FORMAT } = require('../config/application');
 const app = express();
 
+require('dotenv/config')
+
 app.use(morgan(MORGAN_FORMAT));
 app.use(cors());
 app.use(express.json());
