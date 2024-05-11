@@ -6,7 +6,7 @@
 	"type": "commonjs",
 	"scripts": {
 		"test": "jest --collectCoverage",
-		"eslint": "eslint -r dotenv/config bin/www",
+		"eslint": "eslint .",
 		"start": "node -r dotenv/config bin/www",
 		"develop": "nodemon -r dotenv/config bin/www",
 		"db:create": "sequelize db:create",
