@@ -1,6 +1,6 @@
-import { Op } from 'sequelize';
-import ApplicationController from './ApplicationController.js';
-import CarAlreadyRentedError from '../errors/CarAlreadyRentedError.js';
+const { Op } = require('sequelize');
+const ApplicationController = require('./ApplicationController');
+const { CarAlreadyRentedError } = require('../errors');
 
 class CarController extends ApplicationController {
 	constructor({ carModel, userCarModel, dayjs }) {
@@ -156,4 +156,4 @@ class CarController extends ApplicationController {
 	}
 }
 
-export default CarController;
+module.exports = CarController;

@@ -1,6 +1,6 @@
 'use strict';
 
-export default {
+module.exports = {
 	async up(queryInterface) {
 		const names = ['CUSTOMER', 'ADMIN'];
 		const timestamp = new Date();

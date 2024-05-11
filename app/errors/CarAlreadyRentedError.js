@@ -1,4 +1,4 @@
-import ApplicationError from './ApplicationError.js';
+const ApplicationError = require('./ApplicationError');
 
 class CarAlreadyRentedError extends ApplicationError {
 	constructor(car) {
@@ -10,4 +10,4 @@ class CarAlreadyRentedError extends ApplicationError {
 	}
 }
 
-export default CarAlreadyRentedError;
+module.exports = CarAlreadyRentedError;

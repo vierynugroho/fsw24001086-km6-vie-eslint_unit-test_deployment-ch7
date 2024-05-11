@@ -14,4 +14,4 @@ class ApplicationError extends Error {
 	}
 }
 
-export default ApplicationError;
+module.exports = ApplicationError;

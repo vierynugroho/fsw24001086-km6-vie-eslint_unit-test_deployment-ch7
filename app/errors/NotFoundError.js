@@ -1,4 +1,4 @@
-import ApplicationError from './ApplicationError.js';
+const ApplicationError = require('./ApplicationError');
 
 class NotFoundError extends ApplicationError {
 	constructor(method, url) {
@@ -15,4 +15,4 @@ class NotFoundError extends ApplicationError {
 	}
 }
 
-export default NotFoundError;
+module.exports = NotFoundError;

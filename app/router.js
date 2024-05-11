@@ -1,18 +1,16 @@
-import jwt from 'jsonwebtoken';
-import dayjs from 'dayjs';
-import bcrypt from 'bcryptjs';
+const jwt = require('jsonwebtoken');
+const dayjs = require('dayjs');
+const bcrypt = require('bcryptjs');
 
-import { ApplicationController, AuthenticationController, CarController } from './controllers/index.js';
-import car from './models/car.js';
-import role from './models/role.js';
-import user from './models/user.js';
-import usercar from './models/usercar.js';
+const { ApplicationController, AuthenticationController, CarController } = require('./controllers');
+
+const { User, Role, Car, UserCar } = require('./models');
 
 function apply(app) {
-	const carModel = car;
-	const roleModel = role;
-	const userModel = user;
-	const userCarModel = usercar;
+	const carModel = Car;
+	const roleModel = Role;
+	const userModel = User;
+	const userCarModel = UserCar;
 
 	const applicationController = new ApplicationController();
 	const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel });
@@ -39,4 +37,4 @@ function apply(app) {
 	return app;
 }
 
-export default apply;
+module.exports = { apply };

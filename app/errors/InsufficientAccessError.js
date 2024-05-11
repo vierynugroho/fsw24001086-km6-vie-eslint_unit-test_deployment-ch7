@@ -1,4 +1,4 @@
-import ApplicationError from './ApplicationError.js';
+const ApplicationError = require('./ApplicationError');
 
 class InsufficientAccessError extends ApplicationError {
 	constructor(role) {
@@ -14,4 +14,4 @@ class InsufficientAccessError extends ApplicationError {
 	}
 }
 
-export default InsufficientAccessError;
+module.exports = InsufficientAccessError;

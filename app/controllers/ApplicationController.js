@@ -1,4 +1,4 @@
-import { NotFoundError } from '../errors/index.js';
+const { NotFoundError } = require('../errors');
 
 class ApplicationController {
 	handleGetRoot = (req, res) => {
@@ -48,4 +48,4 @@ class ApplicationController {
 	}
 }
 
-export default ApplicationController;
+module.exports = ApplicationController;

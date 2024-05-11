@@ -1,6 +1,6 @@
-import { JWT_SIGNATURE_KEY } from '../../config/application.js';
-import { EmailNotRegisteredError, InsufficientAccessError, RecordNotFoundError, WrongPasswordError } from '../errors/index.js';
-import ApplicationController from './ApplicationController.js';
+const ApplicationController = require('./ApplicationController');
+const { EmailNotRegisteredError, InsufficientAccessError, RecordNotFoundError, WrongPasswordError } = require('../errors');
+const { JWT_SIGNATURE_KEY } = require('../../config/application');
 
 class AuthenticationController extends ApplicationController {
 	constructor({ userModel, roleModel, bcrypt, jwt }) {
@@ -155,4 +155,4 @@ class AuthenticationController extends ApplicationController {
 	};
 }
 
-export default AuthenticationController;
+module.exports = AuthenticationController;

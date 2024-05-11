@@ -1,4 +1,4 @@
-import ApplicationError from './ApplicationError.js';
+const ApplicationError = require('./ApplicationError');
 
 class EmailNotRegisteredError extends ApplicationError {
 	constructor(email) {
@@ -11,4 +11,4 @@ class EmailNotRegisteredError extends ApplicationError {
 	}
 }
 
-export default EmailNotRegisteredError;
+module.exports = EmailNotRegisteredError;

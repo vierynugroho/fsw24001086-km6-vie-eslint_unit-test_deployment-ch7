@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import app from '../app/index.js';
+const app = require('../app/index.js');
+
 const { PORT = 8000 } = process.env;
 
 app.listen(PORT, () => {

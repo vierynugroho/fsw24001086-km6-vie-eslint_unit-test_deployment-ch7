@@ -1,8 +1,13 @@
-import CarAlreadyRentedError from './CarAlreadyRentedError.js';
-import EmailNotRegisteredError from './EmailNotRegisteredError.js';
-import InsufficientAccessError from './InsufficientAccessError.js';
-import NotFoundError from './NotFoundError.js';
-import WrongPasswordError from './WrongPasswordError.js';
-import RecordNotFoundError from './RecordNotFoundError.js';
+const CarAlreadyRentedError = require('./CarAlreadyRentedError');
+const EmailNotRegisteredError = require('./EmailNotRegisteredError');
+const InsufficientAccessError = require('./InsufficientAccessError');
+const NotFoundError = require('./NotFoundError');
+const WrongPasswordError = require('./WrongPasswordError');
 
-export { CarAlreadyRentedError, EmailNotRegisteredError, InsufficientAccessError, NotFoundError, WrongPasswordError, RecordNotFoundError };
+module.exports = {
+	CarAlreadyRentedError,
+	EmailNotRegisteredError,
+	InsufficientAccessError,
+	NotFoundError,
+	WrongPasswordError,
+};

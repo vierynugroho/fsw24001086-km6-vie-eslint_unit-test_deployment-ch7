@@ -1,5 +1,9 @@
-import ApplicationController from './ApplicationController.js';
-import AuthenticationController from './AuthenticationController.js';
-import CarController from './CarController.js';
+const ApplicationController = require('./ApplicationController');
+const AuthenticationController = require('./AuthenticationController');
+const CarController = require('./CarController');
 
-export { ApplicationController, AuthenticationController, CarController };
+module.exports = {
+	ApplicationController,
+	AuthenticationController,
+	CarController,
+};
