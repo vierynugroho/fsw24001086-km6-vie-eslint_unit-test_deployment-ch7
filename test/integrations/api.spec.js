@@ -6,5 +6,7 @@ describe('test API', () => {
 		const response = await request(app).get('/');
 
 		expect(response.status).toBe(200);
+		expect(response._body.status).toBe('OK');
+		expect(response._body.message).toBe('BCR API is up and running!');
 	});
 });

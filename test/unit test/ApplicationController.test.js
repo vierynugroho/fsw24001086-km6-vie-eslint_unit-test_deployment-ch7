@@ -1,10 +1,154 @@
-const request = require('supertest');
-const app = require('../../app/index.js');
-
-const { User, Role, Car, UserCar } = require('../../app/models');
+const { ApplicationController } = require('../../app/controllers');
 
 describe('ApplicationController', () => {
-	describe('Handle Get Root', () => {});
-	describe('Handle Not Found', () => {});
-	describe('Handle Error', () => {});
+	let controller;
+
+	beforeAll(() => {
+		controller = new ApplicationController();
+	});
+
+	const mockRequest = {
+		method: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'],
+		url: '/unknown',
+		query: {
+			page: 1,
+			pageSize: 10,
+		},
+	};
+
+	const mockResponse = {
+		status: jest.fn().mockReturnThis(),
+		json: jest.fn().mockReturnThis(),
+	};
+
+	describe('handleGetRoot', () => {
+		test('should return a 200 status code and a success message', async () => {
+			const expectedJson = {
+				status: 'OK',
+				message: 'BCR API is up and running!',
+			};
+
+			await controller.handleGetRoot(mockRequest, mockResponse);
+
+			expect(mockResponse.status).toHaveBeenCalledWith(200);
+			expect(mockResponse.json).toHaveBeenCalledWith(expectedJson);
+		});
+	});
+
+	describe('handleNotFound', () => {
+		test('should return a 404 status code and a error message', async () => {
+			const expectedJson = {
+				error: {
+					name: 'Error',
+					message: 'Not found!',
+					details: {
+						method: mockRequest.method,
+						url: mockRequest.url,
+					},
+				},
+			};
+
+			await controller.handleNotFound(mockRequest, mockResponse);
+
+			expect(mockResponse.status).toHaveBeenCalledWith(404);
+			expect(mockResponse.json).toHaveBeenCalledWith(expectedJson);
+		});
+	});
+
+	describe('handleError', () => {
+		test('should return a 500 status code and an error', async () => {
+			const err = new Error('An error occurred');
+			const mockRequest = {};
+			const mockResponse = {
+				status: jest.fn().mockReturnThis(),
+				json: jest.fn(),
+			};
+
+			await controller.handleError(err, mockRequest, mockResponse);
+
+			expect(mockResponse.status).toHaveBeenCalledTimes(1);
+			expect(mockResponse.status).toHaveBeenCalledWith(500);
+			expect(mockResponse.json).toHaveBeenCalledTimes(1);
+			expect(mockResponse.json).toHaveBeenCalledWith({
+				error: {
+					name: 'Error',
+					message: 'An error occurred',
+					details: null,
+				},
+			});
+		});
+	});
+
+	describe('getOffsetFromRequest', () => {
+		test('should calculate the offset correctly', () => {
+			const mockRequest = {
+				query: {
+					page: 1,
+					pageSize: 10,
+				},
+			};
+
+			const offset = controller.getOffsetFromRequest(mockRequest);
+
+			expect(offset).toBe(0);
+		});
+
+		test('should handle default page size', () => {
+			const mockRequest = {
+				query: {
+					page: 1,
+				},
+			};
+
+			const offset = controller.getOffsetFromRequest(mockRequest);
+
+			expect(offset).toBe(0);
+		});
+
+		test('should handle default page', () => {
+			const mockRequest = {
+				query: {
+					pageSize: 10,
+				},
+			};
+
+			const offset = controller.getOffsetFromRequest(mockRequest);
+
+			expect(offset).toBe(0);
+		});
+
+		test('should handle default page and size', () => {
+			const mockRequest = {
+				query: {
+					page: 1,
+					pageSize: 10,
+				},
+			};
+
+			const offset = controller.getOffsetFromRequest(mockRequest);
+
+			expect(offset).toBe(0);
+		});
+	});
+
+	describe('buildPaginationObject', () => {
+		test('should calculate pagination correctly', () => {
+			const mockRequest = {
+				query: {
+					page: 1,
+					pageSize: 10,
+				},
+			};
+
+			const count = 20;
+			const pagination = controller.buildPaginationObject(mockRequest, count);
+
+			expect(pagination).toEqual({
+				page: 1,
+				pageCount: 2,
+				pageSize: 10,
+				count: 20,
+			});
+		});
+	});
 });
