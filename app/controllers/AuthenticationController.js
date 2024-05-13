@@ -108,7 +108,6 @@ class AuthenticationController extends ApplicationController {
 
 	handleGetUser = async (req, res) => {
 		const user = await this.userModel.findByPk(req.user.id);
-
 		if (!user) {
 			const err = new RecordNotFoundError(this.userModel.name);
 			res.status(404).json(err);

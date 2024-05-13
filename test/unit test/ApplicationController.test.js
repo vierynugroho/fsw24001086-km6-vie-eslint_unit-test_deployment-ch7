@@ -1,6 +1,6 @@
 const { ApplicationController } = require('../../app/controllers');
 
-describe('ApplicationController', () => {
+describe('Application Controller', () => {
 	let controller;
 
 	beforeAll(() => {
@@ -58,73 +58,44 @@ describe('ApplicationController', () => {
 	describe('handleError', () => {
 		test('should return a 500 status code and an error', async () => {
 			const err = new Error('An error occurred');
-			const mockRequest = {};
-			const mockResponse = {
-				status: jest.fn().mockReturnThis(),
-				json: jest.fn(),
-			};
 
 			await controller.handleError(err, mockRequest, mockResponse);
 
-			expect(mockResponse.status).toHaveBeenCalledTimes(1);
-			expect(mockResponse.status).toHaveBeenCalledWith(500);
-			expect(mockResponse.json).toHaveBeenCalledTimes(1);
-			expect(mockResponse.json).toHaveBeenCalledWith({
+			const expectedJson = {
 				error: {
 					name: 'Error',
 					message: 'An error occurred',
 					details: null,
 				},
-			});
+			};
+
+			expect(mockResponse.status).toHaveBeenCalledTimes(1);
+			expect(mockResponse.status).toHaveBeenCalledWith(500);
+			expect(mockResponse.json).toHaveBeenCalledTimes(1);
+			expect(mockResponse.json).toHaveBeenCalledWith(expectedJson);
 		});
 	});
 
 	describe('getOffsetFromRequest', () => {
 		test('should calculate the offset correctly', () => {
-			const mockRequest = {
-				query: {
-					page: 1,
-					pageSize: 10,
-				},
-			};
-
 			const offset = controller.getOffsetFromRequest(mockRequest);
 
 			expect(offset).toBe(0);
 		});
 
 		test('should handle default page size', () => {
-			const mockRequest = {
-				query: {
-					page: 1,
-				},
-			};
-
 			const offset = controller.getOffsetFromRequest(mockRequest);
 
 			expect(offset).toBe(0);
 		});
 
 		test('should handle default page', () => {
-			const mockRequest = {
-				query: {
-					pageSize: 10,
-				},
-			};
-
 			const offset = controller.getOffsetFromRequest(mockRequest);
 
 			expect(offset).toBe(0);
 		});
 
 		test('should handle default page and size', () => {
-			const mockRequest = {
-				query: {
-					page: 1,
-					pageSize: 10,
-				},
-			};
-
 			const offset = controller.getOffsetFromRequest(mockRequest);
 
 			expect(offset).toBe(0);
@@ -133,13 +104,6 @@ describe('ApplicationController', () => {
 
 	describe('buildPaginationObject', () => {
 		test('should calculate pagination correctly', () => {
-			const mockRequest = {
-				query: {
-					page: 1,
-					pageSize: 10,
-				},
-			};
-
 			const count = 20;
 			const pagination = controller.buildPaginationObject(mockRequest, count);
 
