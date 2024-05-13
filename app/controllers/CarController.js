@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const ApplicationController = require('./ApplicationController');
 const { CarAlreadyRentedError } = require('../errors');
 
@@ -13,6 +13,7 @@ class CarController extends ApplicationController {
 	handleListCars = async (req, res) => {
 		const query = this.getListQueryFromRequest(req);
 		const cars = await this.carModel.findAll(query);
+
 		const carCount = await this.carModel.count({ where: query.where, include: query.include });
 		const pagination = this.buildPaginationObject(req, carCount);
 
@@ -72,11 +73,17 @@ class CarController extends ApplicationController {
 				},
 			});
 
-			if (activeRent) {
+			if (!!activeRent) {
 				const err = new CarAlreadyRentedError(car);
 				res.status(422).json(err);
 				return;
 			}
+
+			console.log('active rent');
+			console.log(activeRent); // null
+
+			console.log('!!active rent');
+			console.log(!!activeRent); // false
 
 			const userCar = await this.userCarModel.create({
 				userId: req.user.id,
@@ -93,17 +100,24 @@ class CarController extends ApplicationController {
 
 	handleUpdateCar = async (req, res) => {
 		try {
-			const { name, price, size, image } = req.body;
+			const { name, price, size, image, isCurrentlyRented } = req.body;
 
 			const car = this.getCarFromRequest(req);
 
-			await car.update({
-				name,
-				price,
-				size,
-				image,
-				isCurrentlyRented: false,
-			});
+			await this.carModel.update(
+				{
+					name,
+					price,
+					size,
+					image,
+					isCurrentlyRented,
+				},
+				{
+					where: {
+						id: req.params.id,
+					},
+				}
+			);
 
 			res.status(200).json(car);
 		} catch (err) {
@@ -117,8 +131,10 @@ class CarController extends ApplicationController {
 	};
 
 	handleDeleteCar = async (req, res) => {
-		await this.carModel.destroy(req.params.id);
-		res.status(204).end();
+		await this.carModel.destroy({
+			where: { id: req.params.id },
+		});
+		res.status(204);
 	};
 
 	getCarFromRequest(req) {

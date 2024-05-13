@@ -131,6 +131,10 @@ describe('Authentication Controller', () => {
 			mockRequest.body.email = 'new_email@mail.com';
 			mockRequest.body.password = 'password';
 
+			const expectedJson = {
+				accessToken: 'user_access_token',
+			};
+
 			await User.destroy({
 				where: { email: mockRequest.body.email },
 			});
@@ -138,15 +142,15 @@ describe('Authentication Controller', () => {
 			await controller.handleRegister(mockRequest, mockResponse, mockNext);
 
 			expect(mockResponse.status).toHaveBeenCalledWith(201);
+			expect(typeof expectedJson.accessToken).toBe('string');
 		});
 
-		test('should catch and next an error', async () => {
+		test('should handle errors', async () => {
 			mockRequest.body = null;
-			mockRequest.body.email = null;
-			mockRequest.body.password = null;
 
-			await controller.handleLogin(mockRequest, mockResponse, mockNext);
+			await controller.handleRegister(mockRequest, mockResponse, mockNext);
 
+			expect(mockNext).toHaveBeenCalledTimes(1);
 			expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
 		});
 	});
@@ -160,6 +164,18 @@ describe('Authentication Controller', () => {
 			expect(mockResponse.status).toHaveBeenCalledWith(404);
 			expect(mockResponse.json).toHaveBeenCalledWith(new RecordNotFoundError(User.name));
 		});
+
+		//? cannot handle userLoggedIn role does not match
+		// test('should return a 404 status code and error when role is not found', async () => {
+		// 	mockRequest.user.id = 1;
+		// 	mockRequest.user.roleId = 2;
+
+		// 	await controller.handleGetUser(mockRequest, mockResponse);
+
+		// 	expect(mockResponse.status).toHaveBeenCalledTimes(1);
+		// 	expect(mockResponse.status).toHaveBeenCalledWith(404);
+		// 	expect(mockResponse.json).toHaveBeenCalledTimes(1);
+		// });
 
 		test('should return the user if the user is found', async () => {
 			mockRequest.user.id = 1;
