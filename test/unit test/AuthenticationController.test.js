@@ -1,6 +1,6 @@
 const { AuthenticationController } = require('../../app/controllers');
-const { InsufficientAccessError, EmailNotRegisteredError, WrongPasswordError, RecordNotFoundError } = require('../../app/errors');
-const { User, Role, Car, UserCar } = require('../../app/models');
+const { EmailNotRegisteredError, WrongPasswordError, RecordNotFoundError } = require('../../app/errors');
+const { User, Role } = require('../../app/models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 

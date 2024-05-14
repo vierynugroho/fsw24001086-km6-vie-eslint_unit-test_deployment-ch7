@@ -8,7 +8,7 @@ describe('Car Controller', () => {
 	const mockRequest = {
 		query: {
 			size: 'small',
-			availableAt: '2024-05-15',
+			availableAt: '2024-05-15T12:15:36.452Z',
 		},
 		params: {
 			id: 1,
@@ -29,8 +29,8 @@ describe('Car Controller', () => {
 			size: 'small',
 			image: 'new-car-image.jpg',
 
-			rentStartedAt: '2024-05-15',
-			rentEndedAt: '2024-05-16',
+			rentStartedAt: '2024-05-13T05:30:28.698Z',
+			rentEndedAt: '2024-05-13T05:30:28.698Z',
 		},
 	};
 
