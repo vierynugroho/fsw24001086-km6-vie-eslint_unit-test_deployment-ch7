@@ -18,8 +18,14 @@ describe('Authentication Controller', () => {
 
 	const mockRequest = {
 		headers: {
+			//! login here: http://localhost:8000/documentation
+			//? token from user:
+			//  "email": "johnny@binar.co.id",
+			//   "password": "123456"
+			//? user id on database must be 1
+
 			authorization:
-				'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkpvaG5ueSIsImVtYWlsIjoiam9obm55QGJpbmFyLmNvLmlkIiwiaW1hZ2UiOm51bGwsInJvbGUiOnsiaWQiOjEsIm5hbWUiOiJDVVNUT01FUiJ9LCJpYXQiOjE3MTU1MDQ4NDl9.m-ocml4VNyns6QgkHLPiNyHEh7Tw05j2fE5_1essxlE',
+				'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTksIm5hbWUiOiJKb2hubnkiLCJlbWFpbCI6ImpvaG5ueUBiaW5hci5jby5pZCIsImltYWdlIjpudWxsLCJyb2xlIjp7ImlkIjoxLCJuYW1lIjoiQ1VTVE9NRVIifSwiaWF0IjoxNzE1NjY1NTk5fQ.VtNkIWm96qltyOdVzQ0D6Exv8DRhE9KeDMQTAtZ1YO0',
 		},
 		user: {
 			id: 1,
@@ -63,6 +69,7 @@ describe('Authentication Controller', () => {
 
 			expect(mockResponse.status).toHaveBeenCalledTimes(1);
 			expect(mockResponse.status).toHaveBeenCalledWith(401);
+			expect(mockRequest.user).not.toBeNull();
 			expect(mockResponse.json).toHaveBeenCalledWith(expectedJson);
 		});
 
@@ -165,7 +172,8 @@ describe('Authentication Controller', () => {
 			expect(mockResponse.json).toHaveBeenCalledWith(new RecordNotFoundError(User.name));
 		});
 
-		//? cannot handle userLoggedIn role does not match
+		//? cannot handle userLoggedIn role does not found
+		//? had to change the seeder then assigned one user to the wrong roleID
 		// test('should return a 404 status code and error when role is not found', async () => {
 		// 	mockRequest.user.id = 1;
 		// 	mockRequest.user.roleId = 2;

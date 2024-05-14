@@ -12,7 +12,9 @@
 		"db:create": "sequelize db:create",
 		"db:drop": "sequelize db:drop",
 		"db:migrate": "sequelize db:migrate",
-		"db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all"
+		"db:undoAll": "sequelize db:migrate:undo:all",
+		"db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
+		"db:seedUndo": "sequelize db:seed:undo:all"
 	},
 	"dependencies": {
 		"@babel/core": "^7.24.5",
