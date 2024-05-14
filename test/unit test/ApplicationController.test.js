@@ -3,13 +3,14 @@ const { ApplicationController } = require('../../app/controllers');
 describe('Application Controller', () => {
 	let controller;
 	let page, pageSize;
+
 	beforeAll(() => {
 		controller = new ApplicationController();
 	});
 
 	const mockRequest = {
-		method: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'],
-		url: '/unknown',
+		method: 'GET',
+		url: '/',
 		query: {
 			page,
 			pageSize,
@@ -40,6 +41,8 @@ describe('Application Controller', () => {
 
 	describe('handle Not Found', () => {
 		test('should return a 404 status code and a error message', async () => {
+			mockRequest.url = '/unknown';
+
 			const expectedJson = {
 				error: {
 					name: 'Error',
@@ -88,41 +91,27 @@ describe('Application Controller', () => {
 
 	describe('getOffsetFromRequest', () => {
 		test('should calculate the offset correctly', () => {
+			mockRequest.query.page = 2;
+			mockRequest.query.pageSize = 5;
+
 			const offset = controller.getOffsetFromRequest(mockRequest);
 
-			expect(offset).toBe(0);
-		});
-
-		test('should handle default page size', () => {
-			const offset = controller.getOffsetFromRequest(mockRequest);
-
-			expect(offset).toBe(0);
-		});
-
-		test('should handle default page', () => {
-			const offset = controller.getOffsetFromRequest(mockRequest);
-
-			expect(offset).toBe(0);
-		});
-
-		test('should handle default page and size', () => {
-			const offset = controller.getOffsetFromRequest(mockRequest);
-
-			expect(offset).toBe(0);
+			expect(offset).toBe(5);
 		});
 	});
 
 	describe('buildPaginationObject', () => {
 		test('should calculate pagination correctly', () => {
-			const count = 20;
+			const count = 15;
+			mockRequest.query.page = 1;
+			mockRequest.query.pageSize = 10;
+
 			const pagination = controller.buildPaginationObject(mockRequest, count);
 
-			expect(pagination).toEqual({
-				page: 1,
-				pageCount: 2,
-				pageSize: 10,
-				count: 20,
-			});
+			expect(pagination.page).toBe(1);
+			expect(pagination.pageCount).toBe(2);
+			expect(pagination.pageSize).toBe(10);
+			expect(pagination.count).toBe(15);
 		});
 	});
 });
