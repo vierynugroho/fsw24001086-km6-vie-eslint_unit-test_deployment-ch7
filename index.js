@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const app = require('../app');
+const app = require('./app');
 
 const PORT = process.env.PORT;
 

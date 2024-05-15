@@ -1,7 +1,7 @@
 {
 	"name": "back-end",
 	"version": "1.0.0",
-	"main": "bin/www",
+	"main": "index.js",
 	"engines": {
 		"node": "18.x"
 	},
@@ -10,8 +10,8 @@
 	"scripts": {
 		"test": "jest --collectCoverage",
 		"eslint": "eslint .",
-		"dev": "node -r dotenv/config bin/www",
-		"develop": "nodemon -r dotenv/config bin/www",
+		"dev": "node -r dotenv/config index.js",
+		"develop": "nodemon -r dotenv/config index.js",
 		"db:create": "sequelize db:create",
 		"db:drop": "sequelize db:drop",
 		"db:migrate": "sequelize db:migrate",
