@@ -5,39 +5,36 @@ const bcrypt = require('bcryptjs');
 const { ApplicationController, AuthenticationController, CarController } = require('./controllers');
 
 const { User, Role, Car, UserCar } = require('./models');
-const router = require('express').Router();
 
-const swaggerDocument = require('../docs/swagger.json');
-const swaggerUI = require('swagger-ui-express');
+function apply(app) {
+	const carModel = Car;
+	const roleModel = Role;
+	const userModel = User;
+	const userCarModel = UserCar;
 
-const carModel = Car;
-const roleModel = Role;
-const userModel = User;
-const userCarModel = UserCar;
+	const applicationController = new ApplicationController();
+	const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel });
+	const carController = new CarController({ carModel, userCarModel, dayjs });
 
-const applicationController = new ApplicationController();
-const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel });
-const carController = new CarController({ carModel, userCarModel, dayjs });
+	const accessControl = authenticationController.accessControl;
 
-const accessControl = authenticationController.accessControl;
+	app.get('/', applicationController.handleGetRoot);
 
-router.get('/', applicationController.handleGetRoot);
+	app.get('/v1/cars', carController.handleListCars);
+	app.post('/v1/cars', authenticationController.authorize(accessControl.ADMIN), carController.handleCreateCar);
+	app.post('/v1/cars/:id/rent', authenticationController.authorize(accessControl.CUSTOMER), carController.handleRentCar);
+	app.get('/v1/cars/:id', carController.handleGetCar);
+	app.put('/v1/cars/:id', authenticationController.authorize(accessControl.ADMIN), carController.handleUpdateCar);
+	app.delete('/v1/cars/:id', authenticationController.authorize(accessControl.ADMIN), carController.handleDeleteCar);
 
-router.get('/v1/cars', carController.handleListCars);
-router.post('/v1/cars', authenticationController.authorize(accessControl.ADMIN), carController.handleCreateCar);
-router.post('/v1/cars/:id/rent', authenticationController.authorize(accessControl.CUSTOMER), carController.handleRentCar);
-router.get('/v1/cars/:id', carController.handleGetCar);
-router.put('/v1/cars/:id', authenticationController.authorize(accessControl.ADMIN), carController.handleUpdateCar);
-router.delete('/v1/cars/:id', authenticationController.authorize(accessControl.ADMIN), carController.handleDeleteCar);
+	app.post('/v1/auth/login', authenticationController.handleLogin);
+	app.post('/v1/auth/register', authenticationController.handleRegister);
+	app.get('/v1/auth/whoami', authenticationController.authorize(accessControl.CUSTOMER), authenticationController.handleGetUser);
 
-router.post('/v1/auth/login', authenticationController.handleLogin);
-router.post('/v1/auth/register', authenticationController.handleRegister);
-router.get('/v1/auth/whoami', authenticationController.authorize(accessControl.CUSTOMER), authenticationController.handleGetUser);
+	app.use(applicationController.handleNotFound);
+	app.use(applicationController.handleError);
 
-router.get('/documentation.json', (req, res) => res.send(swaggerDocument));
-router.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+	return app;
+}
 
-router.use(applicationController.handleNotFound);
-router.use(applicationController.handleError);
-
-module.exports = router;
+module.exports = { apply };
