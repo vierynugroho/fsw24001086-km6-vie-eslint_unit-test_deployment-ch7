@@ -9,7 +9,7 @@
 	"type": "commonjs",
 	"scripts": {
 		"dev": "node index.js",
-		"vercel-build": "sequelize db:migrate && sequelize db:seed",
+		"vercel-build": "npm install && sequelize db:migrate && sequelize db:seed",
 		"test": "jest --collectCoverage",
 		"eslint": "eslint .",
 		"db:create": "sequelize db:create",
