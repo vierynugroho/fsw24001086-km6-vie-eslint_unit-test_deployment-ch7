@@ -79,12 +79,6 @@ class CarController extends ApplicationController {
 				return;
 			}
 
-			console.log('active rent');
-			console.log(activeRent); // null
-
-			console.log('!!active rent');
-			console.log(!!activeRent); // false
-
 			const userCar = await this.userCarModel.create({
 				userId: req.user.id,
 				carId: car.id,

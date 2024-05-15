@@ -12,7 +12,6 @@ describe('Car Controller', () => {
 		},
 		params: {
 			id: 1,
-			pageSize: 10,
 		},
 		user: {
 			id: 1,
@@ -28,7 +27,6 @@ describe('Car Controller', () => {
 			price: 10000,
 			size: 'small',
 			image: 'new-car-image.jpg',
-
 			rentStartedAt: '2024-05-13T05:30:28.698Z',
 			rentEndedAt: '2024-05-13T05:30:28.698Z',
 		},
@@ -49,7 +47,7 @@ describe('Car Controller', () => {
 		});
 	});
 
-	describe('handleListCars', () => {
+	describe('handle List Cars', () => {
 		test('should return a list of cars', async () => {
 			await controller.handleListCars(mockRequest, mockResponse);
 
@@ -59,7 +57,7 @@ describe('Car Controller', () => {
 		});
 	});
 
-	describe('handleGetCar', () => {
+	describe('handle Get Car', () => {
 		test('should return a car', async () => {
 			await controller.handleGetCar(mockRequest, mockResponse);
 
@@ -79,7 +77,7 @@ describe('Car Controller', () => {
 		});
 	});
 
-	describe('handleCreateCar', () => {
+	describe('handle Create Car', () => {
 		test('should create a new car', async () => {
 			await controller.handleCreateCar(mockRequest, mockResponse);
 
@@ -107,7 +105,7 @@ describe('Car Controller', () => {
 		});
 	});
 
-	describe('handleRentCar', () => {
+	describe('handle Rent Car', () => {
 		test('should create a new user-car record', async () => {
 			mockRequest.params = {
 				id: 15,
@@ -117,6 +115,28 @@ describe('Car Controller', () => {
 			mockRequest.body = {
 				rentStartedAt: '2024-05-13T05:30:28.698Z',
 				rentEndedAt: '2024-05-13T05:30:28.698Z',
+			};
+
+			await UserCar.destroy({
+				where: {
+					carId: mockRequest.params.id,
+				},
+			});
+
+			await controller.handleRentCar(mockRequest, mockResponse, mockNext);
+
+			expect(mockResponse.status).toHaveBeenCalledWith(201);
+		});
+
+		test('should create a new user-car without rentEndedAt', async () => {
+			mockRequest.params = {
+				id: 16,
+				pageSize: 10,
+			};
+
+			mockRequest.body = {
+				rentStartedAt: '2024-05-13T05:30:28.698Z',
+				rentEndedAt: null,
 			};
 
 			await UserCar.destroy({

@@ -31,11 +31,11 @@
 
 | File                           | % Stmts   | % Branch   | % Funcs   | % Lines   | Uncovered Line #s   |
 | ------------------------------ | --------- | ---------- | --------- | --------- | ------------------- |
-| All files                      | 97.76     | 71.35      | 75.94     | 97.76     |
-| app/controllers                | 99.48     | 68.54      | 73.48     | 99.48     |
+| All files                      | 97.8      | 71.69      | 75.94     | 97.8      |
+| app/controllers                | 99.48     | 68.93      | 73.48     | 99.48     |
 | ApplicationController.js       | 100       | 100        | 100       | 100       |
 | AuthenticationController.js    | 98.72     | 65.18      | 70.49     | 98.72     | 120-121             |
-| CarController.js               | 100       | 68.9       | 75        | 100       | 2,62                |
+| CarController.js               | 100       | 69.69      | 75        | 100       | 2                   |
 | index.js                       | 100       | 100        | 100       | 100       |
 | app/errors                     | 96.42     | 100        | 84.61     | 96.42     |
 | ApplicationError.js            | 100       | 100        | 100       | 100       |
@@ -58,9 +58,9 @@
 | ------------------------------ | --------- | ---------- | --------- | --------- | ------------------- |
 
 Test Suites: 4 passed, 4 total
-Tests: 32 passed, 32 total
+Tests: 33 passed, 33 total
 Snapshots: 0 total
-Time: 8.198 s, estimated 10 s
+Time: 14.891 s, estimated 25 s
 Ran all test suites.
 
 # Data Diri
