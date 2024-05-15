@@ -10,7 +10,7 @@
 	"scripts": {
 		"test": "jest --collectCoverage",
 		"eslint": "eslint .",
-		"dev": "node -r dotenv/config index.js",
+		"dev": "node dotenv/config index.js",
 		"develop": "nodemon -r dotenv/config index.js",
 		"db:create": "sequelize db:create",
 		"db:drop": "sequelize db:drop",
