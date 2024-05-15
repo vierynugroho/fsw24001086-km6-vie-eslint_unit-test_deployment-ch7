@@ -1,13 +1,12 @@
 require('dotenv/config');
-const { DB_USER, DB_PASSWORD, DB_NAME, DB_HOST, DB_PORT } = process.env;
 
 module.exports = {
 	development: {
-		username: DB_USER,
-		password: DB_PASSWORD,
-		database: DB_NAME,
-		host: DB_HOST,
-		port: DB_PORT,
+		username: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: process.env.DB_NAME,
+		host: process.env.DB_HOST,
+		port: process.env.DB_PORT,
 		dialect: 'postgres',
 		dialectOptions: {
 			ssl: {
@@ -17,11 +16,11 @@ module.exports = {
 		},
 	},
 	test: {
-		username: DB_USER,
-		password: DB_PASSWORD,
-		database: DB_NAME,
-		host: DB_HOST,
-		port: DB_PORT,
+		username: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: process.env.DB_NAME,
+		host: process.env.DB_HOST,
+		port: process.env.DB_PORT,
 		dialect: 'postgres',
 		dialectOptions: {
 			ssl: {
@@ -31,11 +30,11 @@ module.exports = {
 		},
 	},
 	production: {
-		username: DB_USER,
-		password: DB_PASSWORD,
-		database: DB_NAME,
-		host: DB_HOST,
-		port: DB_PORT,
+		username: process.env.DB_USER,
+		password: process.env.DB_PASSWORD,
+		database: process.env.DB_NAME,
+		host: process.env.DB_HOST,
+		port: process.env.DB_PORT,
 		dialect: 'postgres',
 		dialectOptions: {
 			ssl: {
