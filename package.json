@@ -1,7 +1,10 @@
 {
 	"name": "back-end",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "bin/www",
+	"engines": {
+		"node": "18.x"
+	},
 	"license": "MIT",
 	"type": "commonjs",
 	"scripts": {
@@ -14,7 +17,8 @@
 		"db:migrate": "sequelize db:migrate",
 		"db:undoAll": "sequelize db:migrate:undo:all",
 		"db:seed": "sequelize db:seed:undo:all && sequelize db:seed:all",
-		"db:seedUndo": "sequelize db:seed:undo:all"
+		"db:seedUndo": "sequelize db:seed:undo:all",
+		"vercel-build": "sequelize db:migrate && sequelize db:seed"
 	},
 	"dependencies": {
 		"@babel/core": "^7.24.5",
