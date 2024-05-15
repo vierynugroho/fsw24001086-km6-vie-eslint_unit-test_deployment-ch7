@@ -8,7 +8,6 @@
 	"license": "MIT",
 	"type": "commonjs",
 	"scripts": {
-		"dev": "node index.js",
 		"start": "node index.js",
 		"build": "sequelize db:migrate && sequelize db:seed",
 		"test": "jest --collectCoverage",
