@@ -8,7 +8,7 @@
 	"license": "MIT",
 	"type": "commonjs",
 	"scripts": {
-		"start": "node index.js",
+		"dev": "node index.js",
 		"build": "sequelize db:migrate && sequelize db:seed",
 		"test": "jest --collectCoverage",
 		"eslint": "eslint .",
