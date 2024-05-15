@@ -13,6 +13,13 @@ app.use(morgan(MORGAN_FORMAT));
 app.use(cors());
 app.use(express.json());
 app.get('/documentation.json', (req, res) => res.send(swaggerDocument));
-app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use(
+	'/documentation',
+	swaggerUI.serve,
+	swaggerUI.setup(swaggerDocument, {
+		customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
+		customJs: ['https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js', 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-standalone-preset.js'],
+	})
+);
 
 module.exports = router.apply(app);
