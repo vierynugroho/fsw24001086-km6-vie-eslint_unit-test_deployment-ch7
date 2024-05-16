@@ -2,6 +2,10 @@
   Chapter 7 - Challenge
 </h1>
 
+# Deployment Specification
+- Database: neon (https://neon.tech/) - free!
+- Backend: vercel (https://vercel.com/) - free!
+
 # Sebelum Test Lakukan Hal Berikut
 
 ### AuthenticationController.test.js
